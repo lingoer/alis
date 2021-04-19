@@ -1,10 +1,32 @@
 port: 18080
+socks-port: 1080
+allow-lan: true
+bind-address: '*'
 mode: rule
+ipv6: false
+dns:
+  enable: true
+  listen: 0.0.0.0:53
+  nameserver:
+    - 1.2.4.8
+    - 114.114.114.114
+    - 223.5.5.5
+    - tls://13800000000.rubyfish.cn:853
+  fallback:
+    - tls://13800000000.rubyfish.cn:853
+    - tls://1.0.0.1:853
+    - tls://dns.google:853
+  fallback-filter:
+    geoip: true
+    ipcidr:
+      - 240.0.0.0/4
 proxies:
   - name: hk
-    type: socks5
-    server: localhost
-    port: 1080
+    type: ss
+    server: 
+    port: 8765
+    cipher: chacha20-ietf-poly1305
+    password: "123"
 
 proxy-groups:
   - name: auto
@@ -13,5 +35,6 @@ proxy-groups:
       - hk
 rules:
   - DOMAIN,google.com,auto
+  - GEOIP,CN,DIRECT
   - MATCH, hk
 
