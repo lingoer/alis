@@ -1,0 +1,17 @@
+port: 18080
+mode: rule
+proxies:
+  - name: hk
+    type: socks5
+    server: localhost
+    port: 1080
+
+proxy-groups:
+  - name: auto
+    type: select
+    proxies:
+      - hk
+rules:
+  - DOMAIN,google.com,auto
+  - MATCH, hk
+

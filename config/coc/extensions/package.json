@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "coc-elixir": ">=0.6.4",
+    "coc-snippets": ">=2.4.1",
+    "coc-sourcekit": ">=0.0.3",
+    "coc-tsserver": ">=1.7.0"
+  }
+}

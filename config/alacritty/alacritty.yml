@@ -1,0 +1,18 @@
+font:
+  normal:
+    family: Noto Sans Mono
+    style: Regular
+  bold:
+    family: Noto Sans Mono
+    style: Bold
+  italic:
+    family: Noto Sans Mono
+    style: Italic
+  bold_italic:
+    family: Noto Sans Mono
+    style: Bold Italic
+  size: 12
+key_bindings:
+  - { key: L,        mods: Control, action: None }
+  - { key: L,        mods: Control, action: None }
+
