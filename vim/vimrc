@@ -1,0 +1,141 @@
+set nocompatible
+call plug#begin('~/.vim/plugged')
+
+Plug 'lifepillar/vim-solarized8'
+Plug 'arzg/vim-colors-xcode'
+Plug 'karoliskoncevicius/moonshine-vim'
+"Plug 'w0ng/vim-hybrid'
+"Plug 'lewis6991/moonlight.vim'
+
+Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'terryma/vim-expand-region'
+Plug 'scrooloose/nerdcommenter'
+Plug 'kien/ctrlp.vim'
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'stephpy/vim-yaml'
+Plug 'lingoer/Swift-Vim'
+Plug 'elixir-editors/vim-elixir'
+
+call plug#end()
+
+set shiftwidth=2
+set tabstop=2
+set expandtab
+
+set number
+set laststatus=2
+set cursorline
+set wildmenu
+
+set background=dark
+colorscheme solarized8
+
+set wildignore+=*/tmp/*,*.pyc,*.so,*.swp,*.zip,*.jpg,*.bin,*/input/*,*/output/*
+let g:ctrlp_custom_ignore = {
+      \ 'dir':  '\.git$\|\.yardoc\|node_modules\|log\|tmp$\|build',
+      \ 'file': '\.so$\|\.dat$|\.DS_Store$\|.png'
+      \ }
+let g:NERDTreeIgnore=['node_modules$[[dir]]']
+
+map <C-n> :NERDTreeToggle<CR>
+nnoremap h <C-w>h
+nnoremap j <C-w>j
+nnoremap k <C-w>k
+nnoremap l <C-w>l
+imap jj <Esc>
+vmap <Up> 3k
+vmap <Down> 3j
+vmap <Left> 3<C-y>
+vmap <Right> 3<C-e>
+nmap <Up> 3k
+nmap <Down> 3j
+nmap <Left> 10<C-y>
+nmap <Right> 10<C-e>
+
+
+" Set internal encoding of vim, not needed on neovim, since coc.nvim using some
+" unicode characters in the file autoload/float.vim
+set encoding=utf-8
+
+" TextEdit might fail if hidden is not set.
+set hidden
+
+" Some servers have issues with backup files, see #649.
+set nobackup
+set nowritebackup
+" Give more space for displaying messages.
+set cmdheight=2
+
+" Don't pass messages to |ins-completion-menu|.
+set shortmess+=c
+
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved.
+if has("patch-8.1.1564")
+  " Recently vim can merge signcolumn and number column into one
+  set signcolumn=number
+else
+  set signcolumn=yes
+endif
+" Use <c-space> to trigger completion.
+inoremap <silent><expr> <c-@> coc#refresh()
+" Use `[g` and `]g` to navigate diagnostics
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Formatting selected code.
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder.
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+" Applying codeAction to the selected region.
+" Example: `<leader>aap` for current paragraph
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+" Remap keys for applying codeAction to the current buffer.
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Apply AutoFix to problem on the current line.
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+" Map function and class text objects
+" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
+xmap if <Plug>(coc-funcobj-i)
+omap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap af <Plug>(coc-funcobj-a)
+xmap ic <Plug>(coc-classobj-i)
+omap ic <Plug>(coc-classobj-i)
+xmap ac <Plug>(coc-classobj-a)
+omap ac <Plug>(coc-classobj-a)
+autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
+  else
+    execute '!' . &keywordprg . " " . expand('<cword>')
+  endif
+endfunction
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
