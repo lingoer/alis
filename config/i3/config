@@ -44,7 +44,7 @@ set $gray                #757575
 # class                 border              background         text                 indicator
 client.focused          $blue               $blue              $white               $green
 client.unfocused        $black              $black             $gray                $green
-client.focused_inactive $blue               $black              $white              $green
+client.focused_inactive $blue               $black             $white              $green
 client.urgent           $red                $red               $black               $green
 
 # client.unfocused #3a3a3a #222222 #bbbbbb #292d2e
